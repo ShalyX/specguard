@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SpecGuard turns AI review findings into evidence-backed merge decisions.">
+  <title>SpecGuard · Merge decisions with proof</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#review">Skip to review</a>
+  <div class="app-shell">
+    <aside class="rail" aria-label="Review cases">
+      <a class="brand" href="#" aria-label="SpecGuard home"><span class="brand-mark">S</span><span>SpecGuard</span></a>
+      <div class="rail-label">Validated Bob runs</div>
+      <nav id="case-list"></nav>
+      <div class="impact-card">
+        <span class="rail-label">Evaluation signal</span>
+        <strong>3 / 3</strong>
+        <p>Correct decisions with SpecGuard</p>
+        <div class="comparison"><span>Baseline</span><b>1 / 3</b></div>
+      </div>
+      <button class="import-button" id="import-trigger" type="button">Import Bob review</button>
+      <input id="import-file" type="file" accept="application/json,.json" hidden>
+    </aside>
+
+    <main id="review">
+      <header class="topbar">
+        <div><span class="kicker">MERGE DECISION / <span id="case-id"></span></span><h1 id="case-title"></h1></div>
+        <div class="trust-chip"><span></span> Locally verified evidence</div>
+      </header>
+
+      <section class="decision-panel" id="decision-panel">
+        <div class="decision-symbol" id="decision-symbol" aria-hidden="true"></div>
+        <div class="decision-copy"><span class="decision-label">CURRENT DISPOSITION</span><h2 id="decision-title"></h2><p id="decision-summary"></p></div>
+        <div class="decision-counts" id="decision-counts"></div>
+      </section>
+
+      <section class="workspace-grid">
+        <div>
+          <div class="section-heading"><div><span class="kicker">REQUIREMENT LEDGER</span><h2>Every claim has a burden of proof.</h2></div><button class="quiet-button" id="expand-all" type="button">Expand all</button></div>
+          <div id="requirements"></div>
+        </div>
+        <aside class="evidence-panel">
+          <span class="kicker">EVIDENCE HEALTH</span>
+          <h2 id="evidence-score"></h2>
+          <div class="meter"><span id="evidence-meter"></span></div>
+          <dl id="evidence-stats"></dl>
+          <div class="boundary-note"><span>Trust boundary</span><p>Bob proposes claims. SpecGuard validates structure, references, and captured executions before presenting a decision.</p></div>
+        </aside>
+      </section>
+
+      <section id="human-decision" class="human-decision" hidden>
+        <span class="kicker">HUMAN DECISION REQUIRED</span>
+        <h2 id="human-question"></h2>
+        <p>Code can prove what happens. Only the product owner can decide what should happen.</p>
+        <div class="decision-actions" id="decision-actions"></div>
+        <p class="resolved-note" id="resolved-note" aria-live="polite"></p>
+      </section>
+
+      <section class="recommendation">
+        <span class="kicker">BOB RECOMMENDATION</span>
+        <p id="recommendation"></p>
+      </section>
+      <footer><span>SpecGuard prototype · IBM Bob 2.0 Hackathon</span><span>Model claims remain bounded by cited evidence.</span></footer>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "capturedAt": "2026-09-26T22:44:35.162Z",
+  "commit": "synthetic-snapshot",
+  "node": "v24.14.0",
+  "command": [
+    "node",
+    "--test",
+    "--test-isolation=none",
+    "test/orders.test.mjs"
+  ],
+  "exitCode": null,
+  "error": "spawnSync C:\\Program Files\\nodejs\\node.exe EPERM",
+  "sourceHash": "a9f586bf52847e36f84c37ed7e840874706550a4845af0b178d5cdc9970da663",
+  "testHash": "e426386cd9106c9f4f1b033fde243682df822649bd276a4f266ec14b14f805fc"
+}

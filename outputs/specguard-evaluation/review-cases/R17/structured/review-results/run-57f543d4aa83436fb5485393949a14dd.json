@@ -1,0 +1,19 @@
+﻿{
+    "capturedAt":  "2026-09-27T06:43:43.9482310Z",
+    "commit":  "synthetic-snapshot",
+    "node":  "v24.14.0",
+    "command":  [
+                    "node",
+                    "--test",
+                    "--test-isolation=none",
+                    "probes/r2-pagination-ignored.test.mjs"
+                ],
+    "exitCode":  0,
+    "elapsedMilliseconds":  217,
+    "sourceHash":  "A9F586BF52847E36F84C37ED7E840874706550A4845AF0B178D5CDC9970DA663",
+    "testHash":  "7C2607F2FF80D32788B6503E95ED0369E57EC6BFCE16DC7A04D005477A6ADA39",
+    "requirementsHash":  "8FA334D8285188A277DF679B612B8B9C62BEE424B3922FEE4D2CEE810531293D",
+    "sourceUnchangedDuringRun":  true,
+    "testUnchangedDuringRun":  true,
+    "output":  "Γ£ö R2: export ignores offset ΓÇö all matching records returned even when offset=2 (1.3123ms)\r\nΓ£ö R2: export ignores limit ΓÇö all matching records returned even when limit=1 (0.2463ms)\r\nΓä╣ tests 2\r\nΓä╣ suites 0\r\nΓä╣ pass 2\r\nΓä╣ fail 0\r\nΓä╣ cancelled 0\r\nΓä╣ skipped 0\r\nΓä╣ todo 0\r\nΓä╣ duration_ms 104.8778\r\n"
+}

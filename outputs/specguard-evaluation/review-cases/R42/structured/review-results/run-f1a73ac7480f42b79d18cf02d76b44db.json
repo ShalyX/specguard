@@ -1,0 +1,19 @@
+﻿{
+    "capturedAt":  "2026-09-27T06:54:04.7727571Z",
+    "commit":  "synthetic-snapshot",
+    "node":  "v24.14.0",
+    "command":  [
+                    "node",
+                    "--test",
+                    "--test-isolation=none",
+                    "probes/r1-workspace-scope.test.mjs"
+                ],
+    "exitCode":  1,
+    "elapsedMilliseconds":  193,
+    "sourceHash":  "B895DF133BBA63879CF6ECC423FD9B295DD20D93E289E2C4C10795DA379D7024",
+    "testHash":  "C958DB688BFF9144FD60D43FE757AB450041F7C1DD40477319C71D71DE63D44C",
+    "requirementsHash":  "8FA334D8285188A277DF679B612B8B9C62BEE424B3922FEE4D2CEE810531293D",
+    "sourceUnchangedDuringRun":  true,
+    "testUnchangedDuringRun":  true,
+    "output":  "Γ£û R1: exportOrders excludes orders from other workspaces (5.0727ms)\r\nΓ£û R1: exportOrders with status filter still excludes other workspaces (0.4657ms)\r\nΓä╣ tests 2\r\nΓä╣ suites 0\r\nΓä╣ pass 0\r\nΓä╣ fail 2\r\nΓä╣ cancelled 0\r\nΓä╣ skipped 0\r\nΓä╣ todo 0\r\nΓä╣ duration_ms 97.8776\r\n\r\nΓ£û failing tests:\r\n\r\ntest at probes\\r1-workspace-scope.test.mjs:8:1\r\nΓ£û R1: exportOrders excludes orders from other workspaces (5.0727ms)\r\n  AssertionError [ERR_ASSERTION]: exportOrders must filter by workspaceId; b1 (workspace b) must not appear in workspace a export\r\n  + actual - expected\r\n  \r\n  + \u0027id,status,total\\n\"a1\",\"paid\",\"10\"\\n\"b1\",\"paid\",\"99\"\u0027\r\n  - \u0027id,status,total\\n\"a1\",\"paid\",\"10\"\u0027\r\n  \r\n      at TestContext.\u003canonymous\u003e (file:///C:/Users/USER/Documents/Codex/2026-09-26/https-lablab-ai-ai-hackathons-ibm/outputs/specguard-evaluation/review-cases/R42/structured/probes/r1-workspace-scope.test.mjs:15:10)\r\n      at Test.runInAsyncScope (node:async_hooks:228:14)\r\n      at Test.run (node:internal/test_runner/test:1118:25)\r\n      at Test.start (node:internal/test_runner/test:1015:17)\r\n      at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17) {\r\n    generatedMessage: false,\r\n    code: \u0027ERR_ASSERTION\u0027,\r\n    actual: \u0027id,status,total\\n\"a1\",\"paid\",\"10\"\\n\"b1\",\"paid\",\"99\"\u0027,\r\n    expected: \u0027id,status,total\\n\"a1\",\"paid\",\"10\"\u0027,\r\n    operator: \u0027strictEqual\u0027,\r\n    diff: \u0027simple\u0027\r\n  }\r\n\r\ntest at probes\\r1-workspace-scope.test.mjs:19:1\r\nΓ£û R1: exportOrders with status filter still excludes other workspaces (0.4657ms)\r\n  AssertionError [ERR_ASSERTION]: status-filtered export must still be scoped to workspaceId\r\n  + actual - expected\r\n  \r\n  + \u0027id,status,total\\n\"a1\",\"paid\",\"5\"\\n\"b1\",\"paid\",\"7\"\u0027\r\n  - \u0027id,status,total\\n\"a1\",\"paid\",\"5\"\u0027\r\n  \r\n      at TestContext.\u003canonymous\u003e (file:///C:/Users/USER/Documents/Codex/2026-09-26/https-lablab-ai-ai-hackathons-ibm/outputs/specguard-evaluation/review-cases/R42/structured/probes/r1-workspace-scope.test.mjs:25:10)\r\n      at Test.runInAsyncScope (node:async_hooks:228:14)\r\n      at Test.run (node:internal/test_runner/test:1118:25)\r\n      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)\r\n      at Test.postRun (node:internal/test_runner/test:1247:19)\r\n      at Test.run (node:internal/test_runner/test:1175:12)\r\n      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {\r\n    generatedMessage: false,\r\n    code: \u0027ERR_ASSERTION\u0027,\r\n    actual: \u0027id,status,total\\n\"a1\",\"paid\",\"5\"\\n\"b1\",\"paid\",\"7\"\u0027,\r\n    expected: \u0027id,status,total\\n\"a1\",\"paid\",\"5\"\u0027,\r\n    operator: \u0027strictEqual\u0027,\r\n    diff: \u0027simple\u0027\r\n  }\r\n"
+}

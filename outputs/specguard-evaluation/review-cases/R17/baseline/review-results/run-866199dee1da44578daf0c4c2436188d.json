@@ -1,0 +1,19 @@
+﻿{
+    "capturedAt":  "2026-09-27T06:31:09.4232564Z",
+    "commit":  "synthetic-snapshot",
+    "node":  "v24.14.0",
+    "command":  [
+                    "node",
+                    "--test",
+                    "--test-isolation=none",
+                    "probes/r1-workspace-isolation.test.mjs"
+                ],
+    "exitCode":  0,
+    "elapsedMilliseconds":  196,
+    "sourceHash":  "A9F586BF52847E36F84C37ED7E840874706550A4845AF0B178D5CDC9970DA663",
+    "testHash":  "848F0CEEA1EBCBEB23F1D9F7774004907781AAF5E0E6453BA1AA97BC083B90AA",
+    "requirementsHash":  "8FA334D8285188A277DF679B612B8B9C62BEE424B3922FEE4D2CEE810531293D",
+    "sourceUnchangedDuringRun":  true,
+    "testUnchangedDuringRun":  true,
+    "output":  "Γ£ö R1: export excludes records from other workspaces (1.3799ms)\r\nΓ£ö R1: export for unknown workspace returns header only (0.2172ms)\r\nΓä╣ tests 2\r\nΓä╣ suites 0\r\nΓä╣ pass 2\r\nΓä╣ fail 0\r\nΓä╣ cancelled 0\r\nΓä╣ skipped 0\r\nΓä╣ todo 0\r\nΓä╣ duration_ms 94.2029\r\n"
+}

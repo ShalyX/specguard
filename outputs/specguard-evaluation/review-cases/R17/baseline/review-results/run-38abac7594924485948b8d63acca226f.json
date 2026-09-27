@@ -1,0 +1,19 @@
+﻿{
+    "capturedAt":  "2026-09-27T06:31:21.5070120Z",
+    "commit":  "synthetic-snapshot",
+    "node":  "v24.14.0",
+    "command":  [
+                    "node",
+                    "--test",
+                    "--test-isolation=none",
+                    "probes/r4-quoting-edge-cases.test.mjs"
+                ],
+    "exitCode":  0,
+    "elapsedMilliseconds":  199,
+    "sourceHash":  "A9F586BF52847E36F84C37ED7E840874706550A4845AF0B178D5CDC9970DA663",
+    "testHash":  "AEDED5B0F6F19897E4CE064BDE66A6E4BEAB4A76FB32C003C812A512A5AD4CF6",
+    "requirementsHash":  "8FA334D8285188A277DF679B612B8B9C62BEE424B3922FEE4D2CEE810531293D",
+    "sourceUnchangedDuringRun":  true,
+    "testUnchangedDuringRun":  true,
+    "output":  "Γ£ö R4: embedded newline in id field is quoted (1.277ms)\r\nΓ£ö R4: status field containing comma is quoted (0.2219ms)\r\nΓä╣ tests 2\r\nΓä╣ suites 0\r\nΓä╣ pass 2\r\nΓä╣ fail 0\r\nΓä╣ cancelled 0\r\nΓä╣ skipped 0\r\nΓä╣ todo 0\r\nΓä╣ duration_ms 103.3318\r\n"
+}

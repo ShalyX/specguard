@@ -1,0 +1,7 @@
+{
+  "existingTests": 24,
+  "fixtureOracle": "PASS",
+  "status": "PASS",
+  "bobComparison": "NOT_RUN",
+  "details": "oracle-results.json and validation.tap"
+}

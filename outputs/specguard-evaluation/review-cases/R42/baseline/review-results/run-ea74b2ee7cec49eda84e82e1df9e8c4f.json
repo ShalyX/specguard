@@ -1,0 +1,19 @@
+﻿{
+    "capturedAt":  "2026-09-27T10:48:51.2759745Z",
+    "commit":  "synthetic-snapshot",
+    "node":  "v24.14.0",
+    "command":  [
+                    "node",
+                    "--test",
+                    "--test-isolation=none",
+                    "probes/workspace-filter.test.mjs"
+                ],
+    "exitCode":  1,
+    "elapsedMilliseconds":  245,
+    "sourceHash":  "B895DF133BBA63879CF6ECC423FD9B295DD20D93E289E2C4C10795DA379D7024",
+    "testHash":  "EAB45D1785FB020A374DF6C43BCA70F5F0FD2F4414C776FB5B70AE7A34510EC3",
+    "requirementsHash":  "8FA334D8285188A277DF679B612B8B9C62BEE424B3922FEE4D2CEE810531293D",
+    "sourceUnchangedDuringRun":  true,
+    "testUnchangedDuringRun":  true,
+    "output":  "Γ£û R1: exportOrders excludes records from other workspaces (5.3708ms)\r\nΓ£û R1+R2: exportOrders with status filter excludes other-workspace records (0.3557ms)\r\nΓ£ö R2: exportOrders ignores pagination offset/limit (0.3693ms)\r\nΓä╣ tests 3\r\nΓä╣ suites 0\r\nΓä╣ pass 1\r\nΓä╣ fail 2\r\nΓä╣ cancelled 0\r\nΓä╣ skipped 0\r\nΓä╣ todo 0\r\nΓä╣ duration_ms 131.284\r\n\r\nΓ£û failing tests:\r\n\r\ntest at probes\\workspace-filter.test.mjs:11:1\r\nΓ£û R1: exportOrders excludes records from other workspaces (5.3708ms)\r\n  AssertionError [ERR_ASSERTION]: ws-B record \"b1\" leaked into ws-A export:\r\n  id,status,total\r\n  \"a1\",\"paid\",\"10\"\r\n  \"b1\",\"paid\",\"99\"\r\n      at TestContext.\u003canonymous\u003e (file:///C:/Users/USER/Documents/Codex/2026-09-26/https-lablab-ai-ai-hackathons-ibm/outputs/specguard-evaluation/review-cases/R42/baseline/probes/workspace-filter.test.mjs:14:10)\r\n      at Test.runInAsyncScope (node:async_hooks:228:14)\r\n      at Test.run (node:internal/test_runner/test:1118:25)\r\n      at Test.start (node:internal/test_runner/test:1015:17)\r\n      at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17) {\r\n    generatedMessage: false,\r\n    code: \u0027ERR_ASSERTION\u0027,\r\n    actual: false,\r\n    expected: true,\r\n    operator: \u0027==\u0027,\r\n    diff: \u0027simple\u0027\r\n  }\r\n\r\ntest at probes\\workspace-filter.test.mjs:19:1\r\nΓ£û R1+R2: exportOrders with status filter excludes other-workspace records (0.3557ms)\r\n  AssertionError [ERR_ASSERTION]: ws-B record \"b1\" leaked into ws-A status-filtered export:\r\n  id,status,total\r\n  \"a1\",\"paid\",\"10\"\r\n  \"b1\",\"paid\",\"99\"\r\n      at TestContext.\u003canonymous\u003e (file:///C:/Users/USER/Documents/Codex/2026-09-26/https-lablab-ai-ai-hackathons-ibm/outputs/specguard-evaluation/review-cases/R42/baseline/probes/workspace-filter.test.mjs:21:10)\r\n      at Test.runInAsyncScope (node:async_hooks:228:14)\r\n      at Test.run (node:internal/test_runner/test:1118:25)\r\n      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)\r\n      at Test.postRun (node:internal/test_runner/test:1247:19)\r\n      at Test.run (node:internal/test_runner/test:1175:12)\r\n      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {\r\n    generatedMessage: false,\r\n    code: \u0027ERR_ASSERTION\u0027,\r\n    actual: false,\r\n    expected: true,\r\n    operator: \u0027==\u0027,\r\n    diff: \u0027simple\u0027\r\n  }\r\n"
+}

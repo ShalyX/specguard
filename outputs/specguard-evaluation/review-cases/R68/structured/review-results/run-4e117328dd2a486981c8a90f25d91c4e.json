@@ -1,0 +1,19 @@
+﻿{
+    "capturedAt":  "2026-09-27T11:09:16.8513991Z",
+    "commit":  "synthetic-snapshot",
+    "node":  "v24.14.0",
+    "command":  [
+                    "node",
+                    "--test",
+                    "--test-isolation=none",
+                    "test/orders.test.mjs"
+                ],
+    "exitCode":  0,
+    "elapsedMilliseconds":  766,
+    "sourceHash":  "99D92853FDC5AA1DA05CEAE538DBDBCC1BFAFE33C8F52ACF6675FF173E186529",
+    "testHash":  "E426386CD9106C9F4F1B033FDE243682DF822649BD276A4F266EC14B14F805FC",
+    "requirementsHash":  "1E155A32041993865E40D4E95A25562BC13B792127B89ADCB8A76C9CB2D785AF",
+    "sourceUnchangedDuringRun":  true,
+    "testUnchangedDuringRun":  true,
+    "output":  "Γ£ö list is scoped and paginated (3.5431ms)\r\nΓ£ö CSV contains matching rows and header (0.6284ms)\r\nΓ£ö empty export retains header (0.1982ms)\r\nΓ£ö CSV escapes quotes and commas (0.2019ms)\r\nΓä╣ tests 4\r\nΓä╣ suites 0\r\nΓä╣ pass 4\r\nΓä╣ fail 0\r\nΓä╣ cancelled 0\r\nΓä╣ skipped 0\r\nΓä╣ todo 0\r\nΓä╣ duration_ms 265.8216\r\n"
+}

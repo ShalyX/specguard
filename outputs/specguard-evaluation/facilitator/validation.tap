@@ -1,0 +1,33 @@
+Fixture oracle confirmed: R17 correct, R42 leaks foreign records, R68 scope requires a decision. Baseline/structured source pairs identical.
+✔ list is scoped and paginated (3.8224ms)
+✔ CSV contains matching rows and header (0.6832ms)
+✔ empty export retains header (0.3566ms)
+✔ CSV escapes quotes and commas (0.4125ms)
+✔ list is scoped and paginated (2.4159ms)
+✔ CSV contains matching rows and header (0.4996ms)
+✔ empty export retains header (0.9008ms)
+✔ CSV escapes quotes and commas (0.529ms)
+✔ list is scoped and paginated (0.5901ms)
+✔ CSV contains matching rows and header (0.5862ms)
+✔ empty export retains header (0.5575ms)
+✔ CSV escapes quotes and commas (0.3669ms)
+✔ list is scoped and paginated (0.455ms)
+✔ CSV contains matching rows and header (0.4968ms)
+✔ empty export retains header (0.4179ms)
+✔ CSV escapes quotes and commas (0.292ms)
+✔ list is scoped and paginated (0.3314ms)
+✔ CSV contains matching rows and header (0.3205ms)
+✔ empty export retains header (0.2773ms)
+✔ CSV escapes quotes and commas (0.2435ms)
+✔ list is scoped and paginated (0.2837ms)
+✔ CSV contains matching rows and header (0.3357ms)
+✔ empty export retains header (0.261ms)
+✔ CSV escapes quotes and commas (0.2666ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 401.8022

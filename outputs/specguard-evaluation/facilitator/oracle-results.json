@@ -1,0 +1,60 @@
+{
+  "generatedAt": "2026-09-27T11:27:32.034Z",
+  "provenance": "Local Node execution by Codex; not a Bob evaluation",
+  "cases": [
+    {
+      "id": "R17",
+      "arm": "baseline",
+      "sourceSha256": "a9f586bf52847e36f84c37ed7e840874706550a4845af0b178d5cdc9970da663",
+      "workspaceIsolationAssertion": "PASS",
+      "secondMatchingRecordPresent": true,
+      "output": "id,status,total\n\"local-1\",\"paid\",\"10\"\n\"local-2\",\"paid\",\"30\"",
+      "expectedFixtureBehaviorConfirmed": true
+    },
+    {
+      "id": "R17",
+      "arm": "structured",
+      "sourceSha256": "a9f586bf52847e36f84c37ed7e840874706550a4845af0b178d5cdc9970da663",
+      "workspaceIsolationAssertion": "PASS",
+      "secondMatchingRecordPresent": true,
+      "output": "id,status,total\n\"local-1\",\"paid\",\"10\"\n\"local-2\",\"paid\",\"30\"",
+      "expectedFixtureBehaviorConfirmed": true
+    },
+    {
+      "id": "R42",
+      "arm": "baseline",
+      "sourceSha256": "b895df133bba63879cf6ecc423fd9b295dd20d93e289e2c4c10795da379d7024",
+      "workspaceIsolationAssertion": "FAIL",
+      "secondMatchingRecordPresent": true,
+      "output": "id,status,total\n\"local-1\",\"paid\",\"10\"\n\"foreign-1\",\"paid\",\"20\"\n\"local-2\",\"paid\",\"30\"",
+      "expectedFixtureBehaviorConfirmed": true
+    },
+    {
+      "id": "R42",
+      "arm": "structured",
+      "sourceSha256": "b895df133bba63879cf6ecc423fd9b295dd20d93e289e2c4c10795da379d7024",
+      "workspaceIsolationAssertion": "FAIL",
+      "secondMatchingRecordPresent": true,
+      "output": "id,status,total\n\"local-1\",\"paid\",\"10\"\n\"foreign-1\",\"paid\",\"20\"\n\"local-2\",\"paid\",\"30\"",
+      "expectedFixtureBehaviorConfirmed": true
+    },
+    {
+      "id": "R68",
+      "arm": "baseline",
+      "sourceSha256": "99d92853fdc5aa1da05ceae538dbdbcc1bfafe33c8f52acf6675ff173e186529",
+      "workspaceIsolationAssertion": "PASS",
+      "secondMatchingRecordPresent": false,
+      "output": "id,status,total\n\"local-1\",\"paid\",\"10\"",
+      "expectedFixtureBehaviorConfirmed": true
+    },
+    {
+      "id": "R68",
+      "arm": "structured",
+      "sourceSha256": "99d92853fdc5aa1da05ceae538dbdbcc1bfafe33c8f52acf6675ff173e186529",
+      "workspaceIsolationAssertion": "PASS",
+      "secondMatchingRecordPresent": false,
+      "output": "id,status,total\n\"local-1\",\"paid\",\"10\"",
+      "expectedFixtureBehaviorConfirmed": true
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+﻿{
+    "capturedAt":  "2026-09-27T11:15:22.7037168Z",
+    "commit":  "synthetic-snapshot",
+    "node":  "v24.14.0",
+    "command":  [
+                    "node",
+                    "--test",
+                    "--test-isolation=none",
+                    "probes/r2-pagination-export.test.mjs"
+                ],
+    "exitCode":  1,
+    "elapsedMilliseconds":  427,
+    "sourceHash":  "99D92853FDC5AA1DA05CEAE538DBDBCC1BFAFE33C8F52ACF6675FF173E186529",
+    "testHash":  "20E02F109D9AD8E67536B837394A6C47AE4FBBA5F3A4D6F5CFD58C3ACBD709D1",
+    "requirementsHash":  "1E155A32041993865E40D4E95A25562BC13B792127B89ADCB8A76C9CB2D785AF",
+    "sourceUnchangedDuringRun":  true,
+    "testUnchangedDuringRun":  true,
+    "output":  "Γ£û R2-probe: export without limit returns all 25 matching rows (7.6491ms)\r\nΓ£ö R2-probe: export with limit:5 returns only 5 rows (pagination leaks into export) (0.941ms)\r\nΓä╣ tests 2\r\nΓä╣ suites 0\r\nΓä╣ pass 1\r\nΓä╣ fail 1\r\nΓä╣ cancelled 0\r\nΓä╣ skipped 0\r\nΓä╣ todo 0\r\nΓä╣ duration_ms 268.6612\r\n\r\nΓ£û failing tests:\r\n\r\ntest at probes\\r2-pagination-export.test.mjs:14:1\r\nΓ£û R2-probe: export without limit returns all 25 matching rows (7.6491ms)\r\n  AssertionError [ERR_ASSERTION]: expected 26 lines (header + 25 rows), got 21\r\n  \r\n  21 !== 26\r\n  \r\n      at TestContext.\u003canonymous\u003e (file:///C:/Users/USER/Documents/Codex/2026-09-26/https-lablab-ai-ai-hackathons-ibm/outputs/specguard-evaluation/review-cases/R68/structured/probes/r2-pagination-export.test.mjs:18:10)\r\n      at Test.runInAsyncScope (node:async_hooks:228:14)\r\n      at Test.run (node:internal/test_runner/test:1118:25)\r\n      at Test.start (node:internal/test_runner/test:1015:17)\r\n      at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17) {\r\n    generatedMessage: false,\r\n    code: \u0027ERR_ASSERTION\u0027,\r\n    actual: 21,\r\n    expected: 26,\r\n    operator: \u0027strictEqual\u0027,\r\n    diff: \u0027simple\u0027\r\n  }\r\n"
+}

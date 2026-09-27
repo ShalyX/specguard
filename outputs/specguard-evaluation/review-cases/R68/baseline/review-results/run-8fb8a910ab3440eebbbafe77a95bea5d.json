@@ -1,0 +1,19 @@
+﻿{
+    "capturedAt":  "2026-09-27T10:40:40.2022331Z",
+    "commit":  "synthetic-snapshot",
+    "node":  "v24.14.0",
+    "command":  [
+                    "node",
+                    "--test",
+                    "--test-isolation=none",
+                    "probes/column-format.test.mjs"
+                ],
+    "exitCode":  0,
+    "elapsedMilliseconds":  232,
+    "sourceHash":  "99D92853FDC5AA1DA05CEAE538DBDBCC1BFAFE33C8F52ACF6675FF173E186529",
+    "testHash":  "3806D31707027985F740532B80BF59DEF5E67054D5F56B010769D885813AF14F",
+    "requirementsHash":  "1E155A32041993865E40D4E95A25562BC13B792127B89ADCB8A76C9CB2D785AF",
+    "sourceUnchangedDuringRun":  true,
+    "testUnchangedDuringRun":  true,
+    "output":  "Γ£ö total is serialized as a quoted string, not a bare number (2.8241ms)\r\nΓ£ö workspaceId is excluded from CSV output (documents column omission) (0.3405ms)\r\nΓä╣ tests 2\r\nΓä╣ suites 0\r\nΓä╣ pass 2\r\nΓä╣ fail 0\r\nΓä╣ cancelled 0\r\nΓä╣ skipped 0\r\nΓä╣ todo 0\r\nΓä╣ duration_ms 122.7285\r\n"
+}

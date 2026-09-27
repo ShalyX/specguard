@@ -1,0 +1,94 @@
+{
+  "caseId": "R68",
+  "commit": "synthetic-snapshot",
+  "requirements": [
+    {
+      "id": "R1",
+      "requirement": "Export only records belonging to the active workspace.",
+      "source": "REQUIREMENTS.md:5",
+      "status": "supported",
+      "codeReferences": [
+        "src/orders.ts:4",
+        "src/orders.ts:7-8"
+      ],
+      "evidenceFiles": [
+        "review-results/run-4e117328dd2a486981c8a90f25d91c4e.json"
+      ],
+      "observation": "exportOrders delegates to listOrders which applies a strict equality filter on workspaceId (src/orders.ts:4). The test 'list is scoped and paginated' passes a record with workspaceId 'b' while querying 'a' and confirms zero rows are returned. The CSV test also verifies that only records for workspaceId 'a' appear. Evidence is limited to the four supplied tests; no additional probe was needed.",
+      "humanQuestion": null
+    },
+    {
+      "id": "R2",
+      "requirement": "Respect the selected status filter. Export records matching the current view filters.",
+      "source": "REQUIREMENTS.md:6",
+      "status": "needs-decision",
+      "codeReferences": [
+        "src/orders.ts:4",
+        "src/orders.ts:7-8"
+      ],
+      "evidenceFiles": [
+        "review-results/run-4e117328dd2a486981c8a90f25d91c4e.json",
+        "review-results/run-897570e5939d447b816aefc17bd93a45.json"
+      ],
+      "observation": "Status filtering is correctly applied: exportOrders passes the full Query (including status) to listOrders (src/orders.ts:7-8), and listOrders applies the status predicate (src/orders.ts:4). The test 'CSV contains matching rows and header' confirms only the 'paid' row appears when status:'paid'. However, exportOrders also inherits the offset/limit pagination from listOrders. A probe (probes/r2-pagination-export.test.mjs) confirmed that with 25 matching records and no explicit limit, the export returns only 20 rows (the default limit in listOrders baseline:5 / src:5). If 'current view filters' is intended to include only status (and workspace), pagination should be stripped from the export query. If the intent is to export exactly the visible page, the current behaviour is correct. This ambiguity cannot be resolved from the issue text alone.",
+      "humanQuestion": "Should exportOrders export ALL records matching the workspace/status filters regardless of offset/limit, or should it honour the same pagination as the list view? Currently it applies the default limit of 20 via listOrders. For datasets exceeding 20 orders, the export will be silently truncated unless the caller passes a sufficiently large limit."
+    },
+    {
+      "id": "R3",
+      "requirement": "Empty exports contain the header row.",
+      "source": "REQUIREMENTS.md:7",
+      "status": "supported",
+      "codeReferences": [
+        "src/orders.ts:10-11"
+      ],
+      "evidenceFiles": [
+        "review-results/run-4e117328dd2a486981c8a90f25d91c4e.json"
+      ],
+      "observation": "serialize always prepends the literal header string 'id,status,total' as the first element of the joined array (src/orders.ts:11). When the rows array is empty the spread contributes nothing and the result is the bare header. The test 'empty export retains header' explicitly asserts this and passes.",
+      "humanQuestion": null
+    },
+    {
+      "id": "R4",
+      "requirement": "Quote CSV values and escape embedded quotation marks.",
+      "source": "REQUIREMENTS.md:8",
+      "status": "supported",
+      "codeReferences": [
+        "src/orders.ts:11"
+      ],
+      "evidenceFiles": [
+        "review-results/run-4e117328dd2a486981c8a90f25d91c4e.json"
+      ],
+      "observation": "Every field value is individually wrapped in double-quotes and any embedded double-quote character is doubled using replaceAll('\"','\"\"') before wrapping (src/orders.ts:11). The test 'CSV escapes quotes and commas' uses an id containing both a comma and a double-quote and confirms the output is '\"a,\"\"b\"'. All four field positions (id, status, total) are consistently quoted, even numeric values. Newlines embedded in values are not tested; however, the requirement mentions only quotation marks, and the issue context states totals/ids come from trusted upstream code, so embedded newlines are considered out of scope per the requirement text.",
+      "humanQuestion": null
+    }
+  ],
+  "findings": [
+    {
+      "id": "F1",
+      "requirementId": "R2",
+      "title": "exportOrders inherits pagination from listOrders, silently truncating exports larger than the default limit",
+      "severity": "needs-decision",
+      "evidence": "review-results/run-897570e5939d447b816aefc17bd93a45.json",
+      "detail": "Probe r2-pagination-export.test.mjs demonstrates that calling exportOrders with 25 matching records and no explicit limit returns only 20 rows (header + 20 data lines = 21 lines total, not 26). This is caused by exportOrders passing the Query unmodified to listOrders, which applies a default limit of 20 (src/orders.ts:5, baseline/orders.ts:5). A user exporting orders to CSV may not realise the file is paginated. Whether this is the intended behaviour depends on the meaning of 'current view filters' in R2 — see humanQuestion on R2.",
+      "codeReference": "src/orders.ts:7-8"
+    },
+    {
+      "id": "F2",
+      "requirementId": null,
+      "title": "workspaceId column is excluded from CSV output",
+      "severity": "observation",
+      "evidence": "src/orders.ts:11",
+      "detail": "The serialize function emits three columns: id, status, total. The workspaceId field present on every Order is omitted from the header and from each row. The requirements do not specify which columns must appear, so this may be intentional. No test checks for the presence or absence of workspaceId in the output.",
+      "codeReference": "src/orders.ts:10-11"
+    }
+  ],
+  "unassessed": [],
+  "assumptions": [
+    "Node v24.14.0 with --test-isolation=none was used; test results are reproducible for the same node version.",
+    "The issue text is the sole source of intent; no linked ticket or design doc was available.",
+    "Newlines embedded within field values are considered out of scope per the requirement wording and the note about trusted upstream inputs.",
+    "Column selection for the CSV (which fields appear) is considered outside scope since the requirements are silent on it.",
+    "Bobcoin budget usage could not be observed; time cap applied."
+  ],
+  "recommendation": "The change satisfies R1, R3, and R4 as written and tested. R2 is partially satisfied (status filter works correctly) but there is an unresolved ambiguity: exportOrders silently inherits pagination from listOrders, which means exports for workspaces with more than 20 orders will be truncated by default. A human decision is required on whether 'current view filters' encompasses offset/limit or only workspace/status. If exports should be exhaustive, exportOrders must bypass or override the pagination parameters before delegating to listOrders (or use a separate query path). No source repairs were made during this review."
+}

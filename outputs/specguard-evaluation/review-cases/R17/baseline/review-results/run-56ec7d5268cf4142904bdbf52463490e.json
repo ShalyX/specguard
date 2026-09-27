@@ -1,0 +1,19 @@
+﻿{
+    "capturedAt":  "2026-09-27T06:30:46.4145624Z",
+    "commit":  "synthetic-snapshot",
+    "node":  "v24.14.0",
+    "command":  [
+                    "node",
+                    "--test",
+                    "--test-isolation=none",
+                    "probes/r2-pagination-independence.test.mjs"
+                ],
+    "exitCode":  0,
+    "elapsedMilliseconds":  315,
+    "sourceHash":  "A9F586BF52847E36F84C37ED7E840874706550A4845AF0B178D5CDC9970DA663",
+    "testHash":  "51561A85C6CF90B6C68BEA09C1683A9CA5DD1B0F6E96B6D0C412E5C4A8731871",
+    "requirementsHash":  "8FA334D8285188A277DF679B612B8B9C62BEE424B3922FEE4D2CEE810531293D",
+    "sourceUnchangedDuringRun":  true,
+    "testUnchangedDuringRun":  true,
+    "output":  "Γ£ö R2: offset in query does NOT truncate export (1.8334ms)\r\nΓ£ö R2: limit in query does NOT truncate export (0.2834ms)\r\nΓä╣ tests 2\r\nΓä╣ suites 0\r\nΓä╣ pass 2\r\nΓä╣ fail 0\r\nΓä╣ cancelled 0\r\nΓä╣ skipped 0\r\nΓä╣ todo 0\r\nΓä╣ duration_ms 179.9368\r\n"
+}

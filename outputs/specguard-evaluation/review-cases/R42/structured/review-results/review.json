@@ -1,0 +1,86 @@
+{
+  "caseId": "R42",
+  "commit": "synthetic-snapshot",
+  "requirements": [
+    {
+      "id": "R1",
+      "requirement": "Export only records belonging to the active workspace.",
+      "source": "REQUIREMENTS.md:5",
+      "status": "contradicted",
+      "codeReferences": [
+        { "path": "src/orders.ts", "line": 8, "note": "exportOrders filters on query.status only; workspaceId is never applied — 'orders.filter(o => !query.status || o.status === query.status)'" }
+      ],
+      "evidenceFiles": [
+        "review-results/run-f1a73ac7480f42b79d18cf02d76b44db.json"
+      ],
+      "observation": "The exportOrders function at src/orders.ts:8 omits the workspaceId predicate present in listOrders (src/orders.ts:4 / baseline/orders.ts:4). The R1 probe (probes/r1-workspace-scope.test.mjs) reproduces the defect: calling exportOrders with workspaceId:'a' against a dataset containing both workspace-a and workspace-b records returns rows from both workspaces. Actual output: 'id,status,total\\n\"a1\",\"paid\",\"10\"\\n\"b1\",\"paid\",\"99\"'. Both probe tests fail (exit code 1).",
+      "humanQuestion": null
+    },
+    {
+      "id": "R2",
+      "requirement": "Respect the selected status filter. Export every matching record across all pages, regardless of the current page offset or limit.",
+      "source": "REQUIREMENTS.md:6",
+      "status": "supported",
+      "codeReferences": [
+        { "path": "src/orders.ts", "line": 8, "note": "Status predicate: !query.status || o.status === query.status applied to full orders array — offset/limit are not read" },
+        { "path": "test/orders.test.mjs", "line": 6, "note": "Test 'CSV contains matching rows and header' passes status:'paid' and verifies only the paid row is exported" }
+      ],
+      "evidenceFiles": [
+        "review-results/run-a44579fe333f4250a3eb3d3036beacb0.json"
+      ],
+      "observation": "exportOrders iterates the full input array and applies the status predicate without calling slice or consulting offset/limit. The existing test suite passes (4/4 green). This is limited to the checks shown; no cross-page boundary test exists, but the implementation structure is consistent with the requirement. Note: R2 evidence is partially undermined by R1 being violated — once workspace scoping is added the status test may need to be re-checked.",
+      "humanQuestion": null
+    },
+    {
+      "id": "R3",
+      "requirement": "Empty exports contain the header row.",
+      "source": "REQUIREMENTS.md:7",
+      "status": "supported",
+      "codeReferences": [
+        { "path": "src/orders.ts", "line": 12, "note": "serialize() always prepends 'id,status,total' as first element of the join array" },
+        { "path": "test/orders.test.mjs", "line": 9, "note": "Test 'empty export retains header' asserts exportOrders([],…) === 'id,status,total'" }
+      ],
+      "evidenceFiles": [
+        "review-results/run-a44579fe333f4250a3eb3d3036beacb0.json"
+      ],
+      "observation": "serialize() uses ['id,status,total', ...rows.map(…)].join('\\n'); when rows is empty the spread contributes nothing and the output is the header only. Dedicated test passes. Supported, limited to the checks shown.",
+      "humanQuestion": null
+    },
+    {
+      "id": "R4",
+      "requirement": "Quote CSV values and escape embedded quotation marks.",
+      "source": "REQUIREMENTS.md:8",
+      "status": "supported",
+      "codeReferences": [
+        { "path": "src/orders.ts", "line": 12, "note": "Each field: '\"' + String(v).replaceAll('\"','\"\"') + '\"' — wraps in double-quotes and doubles embedded quotes" },
+        { "path": "test/orders.test.mjs", "line": 10, "note": "Test 'CSV escapes quotes and commas': id 'a,\"b' becomes '\"a,\"\"b\"' in output" }
+      ],
+      "evidenceFiles": [
+        "review-results/run-a44579fe333f4250a3eb3d3036beacb0.json"
+      ],
+      "observation": "All values are unconditionally double-quoted and embedded double-quote characters are replaced with double-double-quote per RFC 4180. The escape test passes. Supported, limited to the checks shown.",
+      "humanQuestion": null
+    }
+  ],
+  "findings": [
+    {
+      "id": "F1",
+      "requirement": "R1",
+      "title": "exportOrders does not filter by workspaceId",
+      "severity": "critical",
+      "evidence": [
+        "src/orders.ts:8 — predicate is '!query.status || o.status === query.status'; query.workspaceId is never referenced",
+        "probes/r1-workspace-scope.test.mjs — two tests both fail; actual output includes rows from a different workspace",
+        "review-results/run-f1a73ac7480f42b79d18cf02d76b44db.json — captured exit code 1, 0 pass, 2 fail"
+      ],
+      "detail": "By contrast, listOrders (src/orders.ts:4 and baseline/orders.ts:4) correctly includes 'o.workspaceId === query.workspaceId' in its filter. The fix is to add the same predicate to the filter in exportOrders at src/orders.ts:8. The existing test suite does not cover this case: test/orders.test.mjs:6 supplies a dataset where all rows share the same workspaceId:'a', so cross-workspace leakage is never exercised."
+    }
+  ],
+  "unassessed": [
+    "Header column order is fixed to 'id,status,total'; no requirement specifies column order — not assessed.",
+    "Behaviour when query.workspaceId is an empty string or undefined — out of scope per requirements.",
+    "Performance with very large order datasets — out of scope per requirements.",
+    "Integration with the order-list screen's Query object construction — not represented in this file set."
+  ],
+  "recommendation": "Do not merge. R1 is reproducibly violated: exportOrders leaks orders from all workspaces. The fix is a single-line change to add the workspaceId predicate to the filter in exportOrders (src/orders.ts:8), matching the predicate already present in listOrders. After fixing, add a test that mixes orders from multiple workspaces to prevent regression. R2, R3, and R4 are supported by the existing tests."
+}

@@ -1,0 +1,96 @@
+{
+  "caseId": "R17",
+  "commit": "synthetic-snapshot",
+  "requirements": [
+    {
+      "id": "R1",
+      "requirement": "Export only records belonging to the active workspace.",
+      "source": "REQUIREMENTS.md:5",
+      "status": "supported",
+      "codeReferences": [
+        { "path": "src/orders.ts", "lines": "8", "note": "exportOrders filters on o.workspaceId === query.workspaceId before serialising" }
+      ],
+      "evidenceFiles": [
+        "review-results/run-b8a7db82474e401eae08093293d0483a.json"
+      ],
+      "observation": "The filter in exportOrders (src/orders.ts:8) exactly mirrors the workspace-scope guard already present in listOrders (src/orders.ts:4). The test 'CSV contains matching rows and header' supplies two orders belonging to workspace 'a' with different statuses and one status filter; the returned CSV contains only one row, confirming cross-workspace leakage is absent for that fixture. No explicit cross-workspace isolation test exists (e.g. two orders from different workspaces), but the filter logic is straightforward and the structural argument is strong.",
+      "humanQuestion": null
+    },
+    {
+      "id": "R2",
+      "requirement": "Respect the selected status filter. Export every matching record across all pages, regardless of the current page offset or limit.",
+      "source": "REQUIREMENTS.md:6",
+      "status": "supported",
+      "codeReferences": [
+        { "path": "src/orders.ts", "lines": "7-10", "note": "exportOrders calls filter() but never slice(); offset and limit present in Query are not read" }
+      ],
+      "evidenceFiles": [
+        "review-results/run-b8a7db82474e401eae08093293d0483a.json",
+        "review-results/run-57f543d4aa83436fb5485393949a14dd.json"
+      ],
+      "observation": "exportOrders (src/orders.ts:7-10) applies only the workspace+status filter and then serialises all results. It never calls slice() and never reads query.offset or query.limit, so pagination constraints from the screen are correctly discarded. The status-filter path is exercised by the existing test 'CSV contains matching rows and header'. The existing tests do not pass offset/limit in the query object; probe probes/r2-pagination-ignored.test.mjs was added and executed — both tests pass (offset=2/limit=1 yielded all 3 matching rows), confirming the all-pages requirement is met.",
+      "humanQuestion": null
+    },
+    {
+      "id": "R3",
+      "requirement": "Empty exports contain the header row.",
+      "source": "REQUIREMENTS.md:7",
+      "status": "supported",
+      "codeReferences": [
+        { "path": "src/orders.ts", "lines": "11-13", "note": "serialize() unconditionally prepends 'id,status,total' as the first element of the joined array" }
+      ],
+      "evidenceFiles": [
+        "review-results/run-b8a7db82474e401eae08093293d0483a.json"
+      ],
+      "observation": "serialize() (src/orders.ts:11-13) uses ['id,status,total', ...rows.map(...)].join('\\n'). When rows is empty the spread contributes nothing, so the result is exactly 'id,status,total'. The test 'empty export retains header' asserts this directly and passes.",
+      "humanQuestion": null
+    },
+    {
+      "id": "R4",
+      "requirement": "Quote CSV values and escape embedded quotation marks.",
+      "source": "REQUIREMENTS.md:8",
+      "status": "supported",
+      "codeReferences": [
+        { "path": "src/orders.ts", "lines": "12", "note": "Each value is wrapped in double-quotes; embedded '\"' is replaced with '\"\"' via replaceAll before wrapping" }
+      ],
+      "evidenceFiles": [
+        "review-results/run-b8a7db82474e401eae08093293d0483a.json"
+      ],
+      "observation": "serialize() maps each field with: '\"' + String(v).replaceAll('\"', '\"\"') + '\"'. This produces RFC-4180-compatible quoting: all values are quoted and any embedded double-quote is doubled. The test 'CSV escapes quotes and commas' uses id 'a,\"b' and expects '\"a,\"\"b\"' — it passes. Note that total (a number) is passed through String() then quoted as a string; this is consistent with the requirement as written (requirements explicitly state totals are supplied by trusted upstream code and no formula processing is required).",
+      "humanQuestion": null
+    }
+  ],
+  "findings": [
+    {
+      "id": "F1",
+      "requirement": "R2",
+      "title": "R2 pagination-bypass not covered by existing test suite",
+      "severity": "low",
+      "evidence": "review-results/run-b8a7db82474e401eae08093293d0483a.json",
+      "observation": "The existing test 'CSV contains matching rows and header' (test/orders.test.mjs:6) calls exportOrders with a Query that omits offset and limit entirely. The requirement explicitly mandates that offset/limit are ignored; the implementation is correct but this property was not verified by the shipped tests. Probe probes/r2-pagination-ignored.test.mjs was written and confirms the behavior (review-results/run-57f543d4aa83436fb5485393949a14dd.json, exitCode 0)."
+    }
+  ],
+  "unassessed": [
+    {
+      "id": "U1",
+      "note": "No test asserts that orders from a different workspaceId are excluded while orders from the target workspace are present in the same input array (cross-workspace isolation). The existing tests use either a single-workspace fixture or an empty array. The filter logic is straightforward and the risk is low, but the gap exists.",
+      "requirement": "R1"
+    },
+    {
+      "id": "U2",
+      "note": "The workspaceId column is not included in the CSV output. This is consistent with the field list in serialize() (id, status, total) and is not contradicted by any requirement, but the requirements do not explicitly enumerate which columns to export. Noted as an out-of-scope omission rather than a defect.",
+      "requirement": "R1"
+    }
+  ],
+  "recommendation": "Approve with low-severity note. All four stated requirements are structurally met and executable evidence confirms R2, R3, and R4 directly. R1 is structurally sound but lacks a cross-workspace isolation test. Consider adding a test that mixes records from two workspaces to make R1 regression-proof. The missing pagination probe for R2 has been added under probes/.",
+  "assumptions": [
+    "The 'commit' field is 'synthetic-snapshot' because no git remote is present; capture.ps1 hard-codes this value.",
+    "No bobcoin usage tracking is available in this environment; the time cap was the operative constraint.",
+    "The review covers only the TypeScript source and the test file as directed; no build step was required because node --test loaded the .ts file directly via Node 24's native TypeScript strip-types support."
+  ],
+  "omittedScope": [
+    "No review of build, bundling, or integration with the order-list screen — only the exported functions are in scope.",
+    "No security review of CSV injection; requirements explicitly exclude formula/spreadsheet processing.",
+    "No performance or scalability assessment of loading all orders into memory for export."
+  ]
+}
