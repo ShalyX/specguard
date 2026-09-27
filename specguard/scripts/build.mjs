@@ -15,7 +15,10 @@ const cases = [
 
 await mkdir(dist, { recursive: true });
 const firstReview = path.join(repoRoot, cases[0].path, 'review-results/review.json');
-const evidenceAvailable = await access(firstReview).then(() => true, () => false);
+// Vercel reserves /vercel/outputs for its own build artifacts. Because the
+// project is deployed from this subdirectory, always use the packaged,
+// validated demo data there instead of probing outside the project root.
+const evidenceAvailable = !process.env.VERCEL && await access(firstReview).then(() => true, () => false);
 if (evidenceAvailable) {
   const output = [];
   for (const entry of cases) {
